@@ -1,131 +1,292 @@
-# 🐷 Piggery Pro – Commercial Farm & Feeds Management System
+# 🐷 Piggery Pro – Farm & Feeds Management System
 
-<p align="center">
-  A Java Swing desktop application with custom animations, vector visuals, and OOP architecture for managing pig batches, feeds inventory, operational expenses, and batch cost analytics.
-</p>
+A modern Java desktop application designed to help hog raisers manage pig batches, monitor feeds inventory, track farm expenses, and generate farm reports.
 
----
-
-## 📌 About the Project
-
-**Piggery Pro** is a desktop GUI application built in Java (`PiggeryProApp.java`) using Object-Oriented Programming (OOP) principles and custom Java 2D/Swing components.
-
-The system helps hog raisers manage piggery operations through an animated authentication portal, account-isolated workspaces, batch CRUD management, feeds inventory tracking, real-time cost previews, feed goal computations, expense breakdowns, activity logs, and CSV report exports.
+Built using **Java Swing**, Piggery Pro features a graphical user interface with a green-themed design, interactive dashboard, inventory tables, search and filtering tools, and animated interface components.
 
 ---
 
-## ✨ Key Features
+## 📌 Project Overview
 
-### 🔐 Animated Authentication Portal & Account Isolation
-- Compact `360 × 395` Sign In and Create Account card alongside an animated ambient showcase panel (`AnimatedShowcasePanel`).
-- Password show/hide toggle, focus-ring highlighting, inline validation feedback, and horizontal card shake animation (`ShakeableCardPanel`) on invalid login/registration attempts.
-- Username duplicate checks (case-insensitive), space validation, and a minimum 4-character password rule.
-- Maximum of 3 login attempts per session before lockout.
-- Account-isolated batches, feed records, and activity history per logged-in `HogRaiser`.
+**Piggery Pro – Farm & Feeds Management System** is a desktop-based inventory management application developed using Java.
 
-### 🐖 Pig & Batch Management
-- Create, edit (via form or dialog), and delete pig batches.
-- Auto-generates batch names (`Batch 1`, `Batch 2`, ...) when left blank and prevents duplicate batch names within the same account.
-- Tracks batch name, pig population, price per pig, total pig cost, financer (defaults to `Self-Financed`), and status (`Active`, `Growing`, `Finishing`, `Completed`).
-- Live estimated pig cost preview while typing, live search filtering, status filtering, and sortable table columns.
-- Cascading batch name updates to matching feed records, and cascading deletion of associated feed entries when a batch is removed.
+The application provides tools for organizing pig batches, recording feeds inventory, monitoring farm expenses, and viewing important farm information through a centralized dashboard.
 
-### 🌽 Feeds Inventory Management
-- Add feed records linked to an existing user-owned batch.
-- Tracks feed name/brand, variety, price per unit, quantity, subtotal, and purchase date (`MM/dd/yyyy`).
-- Supports predefined varieties (`Pre-Starter`, `Starter`, `Grower`, `Finisher`, `Breeder`) plus a `Custom Variety` option.
-- Live subtotal preview (`price × quantity`), batch filtering (`All Batches` or a specific batch), live search filtering, sortable columns, and variety-level unit/cost summaries.
-- Automated low-stock alerts when aggregated stock for a feed/variety/batch is at or below `5` units (`FarmService.LOW_STOCK_THRESHOLD`).
+It also includes account registration, user authentication, activity history, batch computation, and CSV report export.
 
-### 📊 Dashboard & Animated Visual Analytics
-- Animated KPI cards (`KpiCard`) for **Total Pig Population**, **Total Batches**, **Total Feed Units**, and **Total Expenses**, complete with custom vector badges (`VectorBadge`) and hover elevation.
-- Quick feed & expense summary banner, recent feed records table, recent batches table, and notifications/low-stock alert panel.
-- Animated custom charts:
-  - `RingGaugePanel`: Starter feed goal progress ring.
-  - `ExpenseTrendPanel`: Batch cost trajectory curve.
-  - `BatchColumnChartPanel`: Batch cost comparison bars.
-- Smooth page transitions (`AnimatedPageHost`), animated sidebar navigation (`SidebarNavButton`), custom initials avatar (`AvatarBadge`), and global header search/status banner.
+The system demonstrates the practical application of Object-Oriented Programming (OOP), Java Swing, exception handling, and Java Collections.
 
-### 🧮 Feed Computation & Cost Formulas
-- Computes per-batch reports (`FarmService.computeBatchReport`) with pig details, variety usage vs. targets, feed cost per pig, and total cost per pig.
+---
 
-| Feed Variety | Predefined Goal |
+## ✨ Features
+
+### 🔐 1. User Authentication
+- User registration and login.
+- Username validation to prevent duplicate accounts.
+- Password validation.
+- Account roles and administrator privileges.
+- Account-specific inventory management.
+
+### 📊 2. Dashboard
+- Displays important farm statistics.
+- Shows total pig batches and pig population.
+- Displays feeds inventory quantities and expenses.
+- Provides visual summaries of farm information.
+- Includes animated dashboard cards and visual indicators.
+
+### 🐖 3. Pig Batch Management
+- Add new pig batches.
+- Record batch name, pig count, price per pig, and financer.
+- Automatically calculate total pig costs.
+- Assign batch statuses, such as Active, Growing, Finishing, and Completed.
+- Search and filter batch records.
+- Edit existing batch information.
+- Delete selected batches.
+
+### 🌾 4. Feeds Inventory Management
+- Add feeds to an existing pig batch.
+- Record feed name, variety, price, quantity, and date.
+- Choose from standard feed varieties:
+  - Pre-Starter
+  - Starter
+  - Grower
+  - Finisher
+  - Breeder
+  - Custom variety
+- Search and filter feeds records.
+- View feeds according to selected batches.
+- Automatically calculate feed subtotals.
+
+### ⚠️ 5. Low-Stock Monitoring
+- Monitor feeds inventory quantities.
+- Identify feeds with low stock.
+- Display alerts when recorded stock reaches the low-stock threshold of 5 units or below.
+
+### 🧮 6. Batch Computation
+- Calculate total pig expenses.
+- Calculate total feeds expenses.
+- Display feeds usage by variety.
+- Compute total batch expenses.
+- Calculate feed cost per pig.
+- Calculate overall cost per pig.
+
+### 💰 7. Expenses Management
+- Display pig stock expenses.
+- Display feeds inventory expenses.
+- Calculate combined farm expenses.
+- Show average cost per pig.
+- Search expense records.
+
+### 📑 8. Reports and Analytics
+- Generate an executive farm and financial report.
+- Display population and inventory summaries.
+- Show financial and expense information.
+- Summarize feeds consumption by variety.
+- Display batch information and financers.
+- Visualize selected report values using progress bars.
+- Export reports as CSV files.
+
+### 👥 9. Users and Activity History
+- Display registered user accounts.
+- Show usernames and account roles.
+- Display the currently signed-in user.
+- Record account-related activities.
+- View activity history associated with the account.
+
+---
+
+## 🖥️ Technologies Used
+
+| Technology | Purpose |
 |---|---|
-| Pre-Starter | `0.1` units per pig (`pigs / 10.0`) |
-| Starter | `1` unit per pig (`pigs * 1`) |
-| Grower | `3` units per pig (`pigs * 3`) |
-| Finisher | No predefined goal |
-| Breeder | No predefined goal |
-
-**Computation formulas:**
-
-- **Total Pig Cost:** `Pig Count × Price per Pig`
-- **Feed Subtotal / Total Feed Cost:** `Price per Unit × Quantity`
-- **Total Batch / Farm Expenses:** `Total Pig Cost + Total Feed Cost`
-- **Feed Cost per Pig:** `Total Feed Cost ÷ Pig Count`
-- **Total Cost per Pig:** `Total Expenses ÷ Pig Count`
-
-### 💸 Expenses, Reports & CSV Export
-- Unified **Expenses** view combining pig stock costs and feed subtotals with live search and summary totals (`Pig Stock Expenses`, `Feed Stock Expenses`, `Total Expenses`, and `Average Cost / Pig`).
-- **Reports & Charts** view with visual progress bars (`Pig Cost Share`, `Feed Cost Share`, `Feed Units vs Pigs`), detailed executive report text, and **CSV export** (`piggery_pro_<username>_report.csv`).
-
-### 👥 User Accounts & Activity History
-- View current session details, register new Hog Raiser accounts, and inspect all registered accounts.
-- Date-stamped **Activity History** filtered to the signed-in user's actions (sign-in/sign-out, account registration, batch add/update/delete, and feed additions).
+| Java | Main programming language |
+| Java Swing | Graphical user interface |
+| AWT | Graphics, colors, fonts, and interface components |
+| ArrayList | Stores accounts, batches, inventory, and history |
+| LinkedHashMap | Organizes inventory summaries |
+| Java Time API | Handles dates using `LocalDate` and `DateTimeFormatter` |
+| File I/O | Exports reports into CSV files |
+| Exception Handling | Handles invalid inputs and application errors |
 
 ---
 
-## 🛠️ Technologies and Java Libraries
+## 🧠 Object-Oriented Programming Concepts
 
-| Technology / Library | Implementation |
+The application demonstrates the four fundamental principles of OOP.
+
+| OOP Concept | Implementation |
 |---|---|
-| Java & Swing (`javax.swing`) | Desktop UI, cards, tables, dialogs, timers, and file chooser |
-| Java 2D (`java.awt`, `java.awt.geom`) | Custom painting, gradients, animations, charts, and vector badges |
-| `ArrayList` & `LinkedHashMap` | In-memory storage and ordered variety/stock summaries |
-| `TableRowSorter` & `RowFilter` | Table sorting and live search/status filtering |
-| `LocalDate` & `DateTimeFormatter` | Strict `MM/dd/yyyy` date parsing, formatting, and timestamps |
-| `PrintWriter` & `FileWriter` | CSV report export |
-| Exception Handling | `InvalidInputException` and `IllegalArgumentException` validation |
-
----
-
-## 🧩 Object-Oriented Programming Concepts
-
-| OOP Principle | Implementation in the System |
-|---|---|
-| Encapsulation | Private fields across domain classes with validated constructors and getter/update methods |
-| Abstraction | Abstract `Person` class declaring abstract `summaryText()` |
+| Encapsulation | Private attributes and public getter/setter methods |
+| Abstraction | Abstract `Person` class |
 | Inheritance | `HogRaiser` extends `Person` |
-| Polymorphism | `HogRaiser` implements `summaryText()` (`getName() + " • " + role`) |
+| Polymorphism | Method overriding through `summaryText()` |
 
-### Class Implementation
+### Main Classes
 
-| Class | Responsibility |
+| Class | Description |
 |---|---|
-| `PiggeryProApp` | Application entry point and Swing UI initialization |
-| `PiggeryGuiFrame` | Main `JFrame` managing authentication, navigation, pages, forms, tables, and view refreshes |
-| `FarmService` | Core business logic, strict parsing, authentication, CRUD operations, alerts, reports, and CSV export |
-| `Person` | Abstract base class for person entities |
-| `HogRaiser` | User account model with role, credentials, admin flag, and authentication logic |
-| `Batch` | Pig batch entity with pig count, pricing, total cost calculation, financer, owner, and status |
-| `FeedsInventory` | Feed record entity with variety, unit price, quantity, subtotal, and date |
-| `InvalidInputException` | Checked exception for user input and validation errors |
-| `AppTheme` & Custom Components | Styling constants and animated/custom-painted widgets (`PremiumTextField`, `PremiumPasswordField`, `FancyButton`, `AnimatedShowcasePanel`, `ShakeableCardPanel`, `KpiCard`, `RingGaugePanel`, `ExpenseTrendPanel`, `BatchColumnChartPanel`, `AnimatedPageHost`, `SidebarNavButton`, `AvatarBadge`, `VectorBadge`) |
+| `PiggeryProApp` | Application entry point |
+| `Person` | Abstract class containing common person information |
+| `HogRaiser` | Handles user information, roles, and authentication |
+| `Batch` | Stores pig batch information and calculates pig costs |
+| `FeedsInventory` | Stores feeds inventory records |
+| `FarmService` | Handles farm operations, validation, computations, and reports |
+| `InvalidInputException` | Custom exception for invalid input |
+| `AppTheme` | Defines application colors, fonts, and styles |
+| `FancyButton` | Custom button with hover animation |
+| `KpiCard` | Displays animated dashboard statistics |
+| `RingGaugePanel` | Displays animated progress indicators |
+| `ExpenseTrendPanel` | Displays visual expense information |
+
+---
+
+## 📸 Application Screenshots
+
+Screenshots of the actual application can be added below. Save your screenshots inside the `images` folder in your GitHub repository.
+
+### 1. Login Screen
+
+![Login Screen](images/login.png)
+
+### 2. Main Dashboard
+
+![Dashboard](images/dashboard.png)
+
+### 3. Pig Batch Management
+
+![Pig Batch Management](images/batch-management.png)
+
+### 4. Feeds Inventory
+
+![Feeds Inventory](images/feeds-inventory.png)
+
+### 5. Expenses Management
+
+![Expenses Management](images/expenses.png)
+
+### 6. Reports and Analytics
+
+![Reports and Analytics](images/reports.png)
+
+### 7. Users and Activity History
+
+![Users and Activity History](images/users-history.png)
+
+> Replace the sample image paths with your actual screenshot filenames.
+
+---
+
+## ⚙️ Installation and Setup
+
+### Prerequisites
+
+- Java Development Kit (JDK)
+- Visual Studio Code or another Java-compatible IDE
+- Java Extension Pack (recommended for VS Code)
+
+### Steps
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/your-username/piggery-pro.git
+```
+
+**2. Open the project folder**
+
+Open the downloaded folder using Visual Studio Code.
+
+**3. Compile the application**
+
+Open the terminal and execute:
+
+```bash
+javac PiggeryProApp.java
+```
+
+**4. Run the application**
+
+```bash
+java PiggeryProApp
+```
+
+---
+
+## 🔑 Default Login Credentials
+
+The application includes a predefined administrator account.
+
+| Field | Credentials |
+|---|---|
+| Full Name | System Admin |
+| Username | `admin` |
+| Password | `1234` |
+| Role | Farm Administrator |
+
+Users can also register their own accounts through the registration interface.
 
 ---
 
 ## 📁 Project Structure
 
-The application is currently contained in a single Java source file.
-
 ```text
-Piggery-Inventory-System/
+Piggery-Pro/
 │
 ├── PiggeryProApp.java
-│   ├── Domain & OOP Classes (InvalidInputException, Person, HogRaiser, Batch, FeedsInventory)
-│   ├── FarmService
-│   ├── Theme, Motion & Custom Vector Components
-│   ├── PiggeryGuiFrame (Auth Portal, Sidebar, Header, 8 Workspace Views)
-│   └── PiggeryProApp (main)
+├── README.md
 │
-└── README.md
+└── images/
+    ├── login.png
+    ├── dashboard.png
+    ├── batch-management.png
+    ├── feeds-inventory.png
+    ├── expenses.png
+    ├── reports.png
+    └── users-history.png
+```
+
+---
+
+## ⚠️ Current Limitations
+
+- Application records are stored temporarily in memory using Java collections.
+- Data is not automatically saved to a database or permanent storage.
+- Exporting reports to CSV is supported, but this does not provide full application data persistence.
+- Account and inventory information may be lost when the application closes.
+- Passwords are stored as plain text in the current implementation.
+
+---
+
+## 🚀 Future Improvements
+
+- Integrate MySQL or another database.
+- Implement permanent data storage.
+- Improve account and password security.
+- Add more detailed inventory monitoring.
+- Add additional financial charts and analytics.
+- Implement backup and restore functionality.
+- Improve report generation and printing options.
+
+---
+
+## 🎯 Project Purpose
+
+This project was developed as an academic application of Java programming and Object-Oriented Programming principles. It aims to demonstrate how a desktop-based inventory management system can help organize piggery operations, manage feeds inventory, monitor expenses, and generate useful farm reports.
+
+---
+
+## 👨‍💻 Contributors
+
+| Member | GitHub Account |
+|---|---|
+| Malabanan, Richmond | `@github-username` |
+| Marquez, Kym Azenith B. | `@github-username` |
+| Pagkalinawan, Kerix | `@github-username` |
+| Roculan, Ebenezer | `@github-username` |
+
+---
+
+<p align="center">
+  <strong>PIGGERY PRO – FARM & FEEDS MANAGEMENT SYSTEM</strong><br>
+  Developed using Java Swing
+</p>
